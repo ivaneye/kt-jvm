@@ -1,5 +1,7 @@
 package com.ivaneye.ktjvm
 
+import java.util.*
+
 /**
  * Created by wangyifan on 2017/5/5.
  */
@@ -15,13 +17,9 @@ object Main {
         }
     }
 
-    private fun showHelp() {
-        println("Usage: java [-options] class [args...]")
-    }
+    private fun showHelp() = println("Usage: java [-options] class [args...]")
 
-    private fun showVersion() {
-        println("Version:$version")
-    }
+    private fun showVersion() = println("Version:$version")
 
     private fun startJVM(args: Array<String>) {
         println("classpath:${args[1]} class:${args[2]} args:${args.slice(3..args.size-1)}")
