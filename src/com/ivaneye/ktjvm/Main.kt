@@ -9,10 +9,18 @@ object Main {
 
     @JvmStatic fun main(args: Array<String>) {
         when (args[0]) {
-            "-version" -> println("Version:$version")
-            "-help" -> println("Usage: java [-options] class [args...]")
+            "-version" -> showVersion()
+            "-help" -> showHelp()
             else -> startJVM(args)
         }
+    }
+
+    private fun showHelp() {
+        println("Usage: java [-options] class [args...]")
+    }
+
+    private fun showVersion() {
+        println("Version:$version")
     }
 
     private fun startJVM(args: Array<String>) {
