@@ -10,6 +10,8 @@
 
     <properties>
         <kotlin.version>1.1.2-2</kotlin.version>
+        <java.encoding>UTF-8</java.encoding>
+        <jdk.version>1.8</jdk.version>
     </properties>
 
     <dependencies>
@@ -17,11 +19,6 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
             <version>${kotlin.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.xenomachina</groupId>
-            <artifactId>kotlin-argparser</artifactId>
-            <version>2.0.0</version>
         </dependency>
     </dependencies>
 
@@ -33,7 +30,6 @@
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <version>${kotlin.version}</version>
-
                 <executions>
                     <execution>
                         <id>compile</id>
@@ -48,6 +44,24 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>${java.encoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <encoding>${java.encoding}</encoding>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                    <debug>true</debug>
+                    <optimize>true</optimize>
+                </configuration>
             </plugin>
         </plugins>
     </build>
