@@ -12,7 +12,7 @@ object Main {
     @JvmStatic fun main(args: Array<String>) {
         when (args[0]) {
             "-version" -> showVersion()
-            "-help" -> showHelp()
+            "-help" ->     showHelp()
             else -> startJVM(args)
         }
     }
