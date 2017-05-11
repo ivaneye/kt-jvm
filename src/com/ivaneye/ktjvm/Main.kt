@@ -1,6 +1,7 @@
 package com.ivaneye.ktjvm
 
 import com.ivaneye.ktjvm.reader.ClassPath
+import java.io.FileInputStream
 import java.util.*
 
 /**
@@ -28,5 +29,8 @@ object Main {
         val className = args[2].replace(Regex.fromLiteral("."),"/")
         val classData = cp.readClass(className)
         println("className:$className,classData:$classData")
+        classData?.forEach { b ->
+            print(b)
+        }
     }
 }
