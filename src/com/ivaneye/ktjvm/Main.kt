@@ -1,5 +1,6 @@
 package com.ivaneye.ktjvm
 
+import com.ivaneye.ktjvm.reader.ClassPath
 import java.util.*
 
 /**
@@ -23,5 +24,9 @@ object Main {
 
     private fun startJVM(args: Array<String>) {
         println("classpath:${args[1]} class:${args[2]} args:${args.slice(3..args.size-1)}")
+        val cp = ClassPath(args[1])
+        val className = args[2].replace(Regex.fromLiteral("."),"/")
+        val classData = cp.readClass(className)
+        println("className:$className,classData:$classData")
     }
 }
