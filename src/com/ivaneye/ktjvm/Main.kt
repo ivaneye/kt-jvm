@@ -1,8 +1,9 @@
 package com.ivaneye.ktjvm
 
+import com.ivaneye.ktjvm.extern.toPositiveInt
 import com.ivaneye.ktjvm.reader.ClassPath
+import java.io.File
 import java.io.FileInputStream
-import java.util.*
 
 /**
  * Created by wangyifan on 2017/5/5.
@@ -14,7 +15,7 @@ object Main {
     @JvmStatic fun main(args: Array<String>) {
         when (args[0]) {
             "-version" -> showVersion()
-            "-help" ->     showHelp()
+            "-help" -> showHelp()
             else -> startJVM(args)
         }
     }
@@ -24,13 +25,24 @@ object Main {
     private fun showVersion() = println("Version:$version")
 
     private fun startJVM(args: Array<String>) {
-        println("classpath:${args[1]} class:${args[2]} args:${args.slice(3..args.size-1)}")
+        println("classpath:${args[1]} class:${args[2]} args:${args.slice(3..args.size - 1)}")
         val cp = ClassPath(args[1])
-        val className = args[2].replace(Regex.fromLiteral("."),"/")
+        val className = args[2].replace(Regex.fromLiteral("."), "/")
         val classData = cp.readClass(className)
         println("className:$className,classData:$classData")
-        classData?.forEach { b ->
-            print(b)
+        classData?.asList()?.forEach { print(it.toInt()) }
+        println()
+        val file = "E:/program/kt-jvm/out/production/kt-jvm/com/ivaneye/ktjvm/Main.class"
+        File(file).readBytes().forEach { print(it.toPositiveInt()) }
+        println()
+
+        val stream = FileInputStream(file)
+        stream.use {
+            var t = it.read()
+            while (t != -1) {
+                print("$t ")
+                t = it.read()
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ class ClassPath {
     }
 
     private fun parseBootAndExtClasspath() {
-        val javaHome = System.getenv().filter { e -> "JAVA_HOME".equals(e.key) }["JAVA_HOME"] ?: throw RuntimeException("Can not find JAVA_HOME")
+        val javaHome = System.getenv().filter { "JAVA_HOME".equals(it.key) }["JAVA_HOME"] ?: throw RuntimeException("Can not find JAVA_HOME")
         val jreLibPath = "$javaHome/jre/lib"
         val jreExtPath = "$javaHome/jre/lib/ext"
         bootClassPathFinder = DirFinder(jreLibPath)

@@ -14,7 +14,7 @@ class JarFinder(val jarPath: String):Finder {
         val zipFile = ZipFile(jarPath)
         for(e in zipFile.entries()){
             if(e.name.contains(className)){
-                return zipFile.getInputStream(e).readBytes()
+                return zipFile.getInputStream(e).use { it.readBytes() }
             }
         }
         return null

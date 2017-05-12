@@ -1,6 +1,8 @@
 package com.ivaneye.ktjvm.reader
 
+import java.io.File
 import java.io.FileInputStream
+import java.nio.charset.Charset
 
 /**
  * 从文件路径中读取文件
@@ -9,7 +11,7 @@ import java.io.FileInputStream
 class FileFinder(val libPath: String) : Finder {
     override fun readClass(className: String): ByteArray? {
         if (libPath.replace(Regex.fromLiteral("\\"),"/").contains(className)) {
-            return FileInputStream(libPath).readBytes()
+            return File(libPath).readBytes()
         }
         return null
     }
