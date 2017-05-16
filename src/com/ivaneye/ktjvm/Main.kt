@@ -30,19 +30,6 @@ object Main {
         val className = args[2].replace(Regex.fromLiteral("."), "/")
         val classData = cp.readClass(className)
         println("className:$className,classData:$classData")
-        classData?.asList()?.forEach { print(it.toInt()) }
-        println()
-        val file = "E:/program/kt-jvm/out/production/kt-jvm/com/ivaneye/ktjvm/Main.class"
-        File(file).readBytes().forEach { print(it.toPositiveInt()) }
-        println()
-
-        val stream = FileInputStream(file)
-        stream.use {
-            var t = it.read()
-            while (t != -1) {
-                print("$t ")
-                t = it.read()
-            }
-        }
+        classData?.forEach { print(it.toPositiveInt()) }
     }
 }
