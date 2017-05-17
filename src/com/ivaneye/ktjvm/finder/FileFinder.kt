@@ -1,11 +1,11 @@
-package com.ivaneye.ktjvm.reader
+package com.ivaneye.ktjvm.finder
 
 import java.io.File
 import java.io.FileInputStream
 import java.nio.charset.Charset
 
 /**
- * 从文件路径中读取文件
+ * 锟斤拷锟侥硷拷路锟斤拷锟叫讹拷取锟侥硷拷
  * Created by wangyifan on 2017/5/11.
  */
 class FileFinder(val libPath: String) : Finder {

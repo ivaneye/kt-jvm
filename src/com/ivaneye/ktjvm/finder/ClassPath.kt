@@ -1,4 +1,4 @@
-package com.ivaneye.ktjvm.reader
+package com.ivaneye.ktjvm.finder
 
 /**
  * Created by wangyifan on 2017/5/11.
@@ -6,7 +6,7 @@ package com.ivaneye.ktjvm.reader
 class ClassPath {
 
     lateinit var bootClassPathFinder: Finder
-    //bootClassPathÖÐÒÑ¼ÓÔØ
+    //bootClassPathï¿½ï¿½ï¿½Ñ¼ï¿½ï¿½ï¿½
 //    lateinit var extClassPathFinder: Finder
     lateinit var userClassPathFinder: Finder
 

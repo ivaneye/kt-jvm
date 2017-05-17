@@ -1,7 +1,8 @@
 package com.ivaneye.ktjvm
 
 import com.ivaneye.ktjvm.extern.toPositiveInt
-import com.ivaneye.ktjvm.reader.ClassPath
+import com.ivaneye.ktjvm.finder.ClassPath
+import com.ivaneye.ktjvm.reader.ClassReader
 import java.io.File
 import java.io.FileInputStream
 
@@ -30,6 +31,11 @@ object Main {
         val className = args[2].replace(Regex.fromLiteral("."), "/")
         val classData = cp.readClass(className)
         println("className:$className,classData:$classData")
-        classData?.forEach { print(it.toPositiveInt()) }
+        val classReader = ClassReader(classData!!)
+        val classInfo = classReader.readClass()
+        println(classInfo.magic)
+        println(classInfo.minorVersion)
+        println(classInfo.majorVersion)
+        println(classInfo.constantPoolCount)
     }
 }

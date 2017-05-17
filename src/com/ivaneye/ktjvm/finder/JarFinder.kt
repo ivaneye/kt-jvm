@@ -1,4 +1,4 @@
-package com.ivaneye.ktjvm.reader
+package com.ivaneye.ktjvm.finder
 
 import java.io.InputStream
 import java.util.zip.ZipEntry
