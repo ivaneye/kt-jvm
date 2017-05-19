@@ -25,11 +25,9 @@ class ClassReader {
     }
 
     private fun readMagic() {
-        var magic = "0x"
         for (i in IntRange(0, 3)) {
-            magic += Integer.toHexString(commonReader.readU1()).toUpperCase()
+            classInfo.magic.set(i, commonReader.readU1())
         }
-        classInfo.magic = magic
     }
 
     private fun readMinorVersion() {

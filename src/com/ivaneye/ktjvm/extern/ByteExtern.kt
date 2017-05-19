@@ -5,3 +5,5 @@ package com.ivaneye.ktjvm.extern
  */
 //转化为无符号整型
 fun Byte.toPositiveInt() = toInt() and 0xFF
+//转化为无符号长整型
+fun Byte.toPositiveLong() = toLong() and 0xFF

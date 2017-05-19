@@ -10,7 +10,7 @@ class CommonReader(var data: ByteArray) {
     fun readU1(): Int {
         val result = data[0].toPositiveInt()
         data = data.drop(1).toByteArray()
-        return result
+        return result.
     }
 
     fun readU2(): Int {
