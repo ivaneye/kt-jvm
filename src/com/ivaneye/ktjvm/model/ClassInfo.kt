@@ -12,7 +12,7 @@ class ClassInfo {
     lateinit var minorVersion: U2
     lateinit var majorVersion: U2
     lateinit var constantPoolCount: U2
-    lateinit var cpInfos: Array<ConstantPoolInfo>
+    lateinit var cpInfos: Array<Object>   //constant包中的对象
     lateinit var accessFlags: U2
     lateinit var thisClass: U2
     lateinit var superClass: U2
