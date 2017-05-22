@@ -6,5 +6,5 @@ import com.ivaneye.ktjvm.type.U2
 /**
  * Created by wangyifan on 2017/5/22.
  */
-class ConstantMethodHandler(val tag: U1, val refKind: U1, val refIndex: U2) {
+class ConstantMethodHandler(val tag: U1, val refKind: U1, val refIndex: U2) : Constant {
 }

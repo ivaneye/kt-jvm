@@ -37,5 +37,14 @@ object Main {
         println(classInfo.minorVersion())
         println(classInfo.majorVersion())
         println(classInfo.constantPoolCount())
+        println(classInfo.cpInfos())
+        println(classInfo.accessFlags())
+        println(classInfo.thisClass())
+        println(classInfo.superClass())
+        println(classInfo.interfacesCount())
+//        println(classInfo.interfaces())
+        println(classInfo.fieldsCount())
+//        println(classInfo.fields())
+        println(classInfo.methodsCount())
     }
 }

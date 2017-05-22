@@ -7,5 +7,5 @@ import com.ivaneye.ktjvm.type.U4
 /**
  * Created by wangyifan on 2017/5/22.
  */
-class ConstantClass(val tag: U1, val nameIndex: U2) {
+class ConstantClass(val tag: U1, val nameIndex: U2) : Constant {
 }

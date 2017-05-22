@@ -1,6 +1,5 @@
 package com.ivaneye.ktjvm.reader
 
-import com.ivaneye.ktjvm.extern.toPositiveInt
 import com.ivaneye.ktjvm.type.U1
 import com.ivaneye.ktjvm.type.U2
 import com.ivaneye.ktjvm.type.U4
@@ -18,20 +17,20 @@ class CommonReader(var data: ByteArray) {
     }
 
     fun readU2(): U2 {
-        val result = U2(data.sliceArray(IntRange(0, 1)))
-        data = data.drop(2).toByteArray()
-        return result
+        return U2(readByteArray(2))
     }
 
     fun readU4(): U4 {
-        val result = U4(data.sliceArray(IntRange(0, 3)))
-        data = data.drop(4).toByteArray()
-        return result
+        return U4(readByteArray(4))
     }
 
     fun readU8(): U8 {
-        val result = U8(data.sliceArray(IntRange(0, 7)))
-        data = data.drop(8).toByteArray()
+        return U8(readByteArray(8))
+    }
+
+    fun readByteArray(size: Int): ByteArray {
+        val result = data.sliceArray(IntRange(0, size - 1))
+        data = data.drop(size).toByteArray()
         return result
     }
 }
