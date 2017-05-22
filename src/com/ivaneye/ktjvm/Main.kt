@@ -33,9 +33,9 @@ object Main {
         println("className:$className,classData:$classData")
         val classReader = ClassReader(classData!!)
         val classInfo = classReader.readClass()
-        println(classInfo.magic)
-        println(classInfo.minorVersion)
-        println(classInfo.majorVersion)
-        println(classInfo.constantPoolCount)
+        println(classInfo.magic())
+        println(classInfo.minorVersion())
+        println(classInfo.majorVersion())
+        println(classInfo.constantPoolCount())
     }
 }

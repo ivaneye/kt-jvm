@@ -25,9 +25,7 @@ class ClassReader {
     }
 
     private fun readMagic() {
-        for (i in IntRange(0, 3)) {
-            classInfo.magic.set(i, commonReader.readU1())
-        }
+        classInfo.magic = commonReader.readU4()
     }
 
     private fun readMinorVersion() {

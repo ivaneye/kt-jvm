@@ -1,33 +1,43 @@
 package com.ivaneye.ktjvm.model
 
 import com.ivaneye.ktjvm.extern.toPositiveInt
+import com.ivaneye.ktjvm.type.U2
+import com.ivaneye.ktjvm.type.U4
 
 /**
  * Created by wangyifan on 2017/5/17.
  */
 class ClassInfo {
-    var magic: ByteArray = ByteArray(4)
-    var minorVersion: ByteArray = ByteArray(2)
-    var majorVersion: ByteArray = ByteArray(2)
-    var constantPoolCount: ByteArray = ByteArray(2)
+    lateinit var magic: U4
+    lateinit var minorVersion: U2
+    lateinit var majorVersion: U2
+    lateinit var constantPoolCount: U2
     lateinit var cpInfos: Array<ConstantPoolInfo>
-    var accessFlags: ByteArray = ByteArray(2)
-    var thisClass: ByteArray = ByteArray(2)
-    var superClass: ByteArray = ByteArray(2)
-    var interfacesCount: ByteArray = ByteArray(2)
+    lateinit var accessFlags: U2
+    lateinit var thisClass: U2
+    lateinit var superClass: U2
+    lateinit var interfacesCount: U2
     lateinit var interfaceInfos: Array<InterfaceInfo>
-    var fieldsCount: ByteArray = ByteArray(2)
+    lateinit var fieldsCount: U2
     lateinit var fieldInfos: Array<FieldInfo>
-    var methodsCount: ByteArray = ByteArray(2)
+    lateinit var methodsCount: U2
     lateinit var methodInfos: Array<MethodInfo>
-    var attributesCount: ByteArray = ByteArray(2)
+    lateinit var attributesCount: U2
     lateinit var attributeInfos: Array<AttributeInfo>
 
-    fun showMagic() {
-        var str = "0x"
-        for (i in magic) {
-            str += Integer.toHexString(i.toPositiveInt()).toUpperCase()
-        }
-        println(str)
+    fun magic(): String {
+        return magic.toHexString()
+    }
+
+    fun minorVersion(): Int {
+        return minorVersion.toInt()
+    }
+
+    fun majorVersion(): Int {
+        return majorVersion.toInt()
+    }
+
+    fun constantPoolCount(): Int {
+        return constantPoolCount.toInt()
     }
 }
