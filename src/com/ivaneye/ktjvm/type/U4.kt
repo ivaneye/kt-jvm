@@ -19,4 +19,8 @@ class U4(val data: ByteArray) {
         }
         return str
     }
+
+    fun toByteArray(): ByteArray {
+        return data
+    }
 }

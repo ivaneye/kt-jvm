@@ -14,7 +14,7 @@ class ClassInfo {
     lateinit var minorVersion: U2
     lateinit var majorVersion: U2
     lateinit var constantPoolCount: U2
-    lateinit var cpInfos: Array<Constant>   //constant包中的对象
+    lateinit var cpInfos: Map<Int, Constant>   //constant包中的对象
     lateinit var accessFlags: U2
     lateinit var thisClass: U2
     lateinit var superClass: U2
@@ -43,8 +43,8 @@ class ClassInfo {
         return constantPoolCount.toInt()
     }
 
-    fun cpInfos(): Int {
-        return cpInfos.size
+    fun cpInfos(): Map<Int, Constant> {
+        return cpInfos
     }
 
     fun accessFlags(): String {

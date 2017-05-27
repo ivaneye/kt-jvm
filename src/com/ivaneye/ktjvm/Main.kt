@@ -37,7 +37,11 @@ object Main {
         println(classInfo.minorVersion())
         println(classInfo.majorVersion())
         println(classInfo.constantPoolCount())
-        println(classInfo.cpInfos())
+        println("Constant pool:")
+        for((key,value) in classInfo.cpInfos()) {
+            println("#$key = $value")
+        }
+        println("{")
         println(classInfo.accessFlags())
         println(classInfo.thisClass())
         println(classInfo.superClass())

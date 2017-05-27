@@ -24,10 +24,6 @@ class CommonReader(var data: ByteArray) {
         return U4(readByteArray(4))
     }
 
-    fun readU8(): U8 {
-        return U8(readByteArray(8))
-    }
-
     fun readByteArray(size: Int): ByteArray {
         val result = data.sliceArray(IntRange(0, size - 1))
         data = data.drop(size).toByteArray()
