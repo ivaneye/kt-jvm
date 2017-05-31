@@ -26,7 +26,11 @@ class CommonReader(var data: ByteArray) {
 
     fun readByteArray(size: Int): ByteArray {
         val result = data.sliceArray(IntRange(0, size - 1))
-        data = data.drop(size).toByteArray()
+        drop(size)
         return result
+    }
+
+    fun drop(size: Int) {
+        data = data.drop(size).toByteArray()
     }
 }

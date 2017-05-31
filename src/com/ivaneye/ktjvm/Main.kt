@@ -46,9 +46,16 @@ object Main {
         println(classInfo.thisClass())
         println(classInfo.superClass())
         println(classInfo.interfacesCount())
-//        println(classInfo.interfaces())
+        println(classInfo.interfaces())
         println(classInfo.fieldsCount())
-//        println(classInfo.fields())
+        println("Fields:")
+        for(field in classInfo.fields()) {
+            println(field)
+        }
+        println("Fields End!")
         println(classInfo.methodsCount())
+        println(classInfo.methods())
+        println(classInfo.attributesCount())
+        println(classInfo.attributeInfos())
     }
 }

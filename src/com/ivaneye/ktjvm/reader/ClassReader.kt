@@ -3,9 +3,11 @@ package com.ivaneye.ktjvm.reader
 import com.ivaneye.ktjvm.model.ClassInfo
 import com.ivaneye.ktjvm.model.FieldInfo
 import com.ivaneye.ktjvm.model.MethodInfo
-import com.ivaneye.ktjvm.model.attr.Attribute
+import com.ivaneye.ktjvm.model.attr.*
 import com.ivaneye.ktjvm.model.constant.*
+import com.ivaneye.ktjvm.type.U1
 import com.ivaneye.ktjvm.type.U2
+import com.ivaneye.ktjvm.type.U4
 import java.util.*
 
 /**
@@ -60,10 +62,9 @@ class ClassReader {
     private fun readConstantPool() {
         //常量池下标从1开始
         val cpInfoMap = HashMap<Int, Constant>()
-        var i = 0
+        var i = 1
         while (i < classInfo.constantPoolCount()) {
             val tag = commonReader.readU1()
-            i += 1
             when (tag.toInt()) {
                 1 -> {
                     val length = commonReader.readU2()
@@ -111,6 +112,7 @@ class ClassReader {
                     cpInfoMap.put(i, ConstantInvokeDynamic(tag, commonReader.readU2(), commonReader.readU2(), classInfo))
                 }
             }
+            i += 1
         }
         classInfo.cpInfos = cpInfoMap
     }
@@ -156,7 +158,7 @@ class ClassReader {
                 val descIdx = commonReader.readU2()
                 val attrCount = commonReader.readU2()
                 val attrs = readAttributes(attrCount.toInt())
-                val fieldInfo = FieldInfo(accFlag, nameIdx, descIdx, attrCount, attrs)
+                val fieldInfo = FieldInfo(accFlag, nameIdx, descIdx, attrCount, attrs, classInfo)
                 arr.add(fieldInfo)
             }
             classInfo.fieldInfos = arr.toTypedArray()
@@ -177,7 +179,7 @@ class ClassReader {
                 val descIdx = commonReader.readU2()
                 val attrCount = commonReader.readU2()
                 val attrs = readAttributes(attrCount.toInt())
-                val methodInfo = MethodInfo(accFlag, nameIdx, descIdx, attrCount, attrs)
+                val methodInfo = MethodInfo(accFlag, nameIdx, descIdx, attrCount, attrs, classInfo)
                 arr.add(methodInfo)
             }
             classInfo.methodInfos = arr.toTypedArray()
@@ -195,12 +197,97 @@ class ClassReader {
 
     private fun readAttributes(count: Int): Array<Attribute> {
         if (count > 0) {
+            val arr = ArrayList<Attribute>()
             for (i in IntRange(0, count - 1)) {
                 val attributeNameIndex = commonReader.readU2()
-                when (attributeNameIndex.toInt()) {
-
+                val name = classInfo.cpInfos[attributeNameIndex.toInt()]!!.value()
+                when (name) {
+                    "ConstantValue" -> {
+                        val attr = ConstantValue()
+                        attr.attributeNameIndex = attributeNameIndex
+                        attr.attributeLength = commonReader.readU4()
+                        attr.constantValueIndex = commonReader.readU2()
+                        attr.classInfo = classInfo
+                        arr.add(attr)
+                    }
+                    "Code" -> {
+                        val attr = Code()
+                        attr.attributeNameIndex = attributeNameIndex
+                        attr.attributeLength = commonReader.readU4()
+                        attr.maxStack = commonReader.readU2()
+                        attr.maxLocals = commonReader.readU2()
+                        attr.codeLength = commonReader.readU4()
+                        //解析code
+                        val codeArr = ArrayList<U1>()
+                        for (i in IntRange(0, attr.codeLength.toInt() - 1)) {
+                            codeArr.add(commonReader.readU1())
+                        }
+                        attr.code = codeArr.toTypedArray()
+                        attr.exceptionTableLength = commonReader.readU2()
+                        //解析exceptionTable
+                        val exceptionArr = ArrayList<ExceptionTable>()
+                        for (i in IntRange(0, attr.exceptionTableLength.toInt() - 1)) {
+                            val exceptionTable = ExceptionTable()
+                            exceptionTable.startPc = commonReader.readU2()
+                            exceptionTable.endPc = commonReader.readU2()
+                            exceptionTable.handlerPc = commonReader.readU2()
+                            exceptionTable.cacheType = commonReader.readU2()
+                            exceptionArr.add(exceptionTable)
+                        }
+                        attr.exceptionTable = exceptionArr.toTypedArray()
+                        attr.attributesCount = commonReader.readU2()
+                        attr.attributes = readAttributes(attr.attributesCount.toInt())
+                        arr.add(attr)
+                    }
+                    "LineNumberTable" -> {
+                        val attr = LineNumberTable()
+                        attr.attributeNameIndex = attributeNameIndex
+                        attr.attributeLength = commonReader.readU4()
+                        attr.lineNumberTableLength = commonReader.readU2()
+                        //解析lineNumberInfo
+                        val lineNumberInfoArr = ArrayList<LineNumberInfo>()
+                        for (i in IntRange(0, attr.lineNumberTableLength.toInt() - 1)) {
+                            val lineNumberInfo = LineNumberInfo()
+                            lineNumberInfo.startPc = commonReader.readU2()
+                            lineNumberInfo.lineNumber = commonReader.readU2()
+                            lineNumberInfoArr.add(lineNumberInfo)
+                        }
+                        attr.lineNumberTable = lineNumberInfoArr.toTypedArray()
+                        arr.add(attr)
+                    }
+                    "LocalVariableTable" -> {
+                        val attr = LocalVariableTable()
+                        attr.attributeNameIndex = attributeNameIndex
+                        attr.attributeLength = commonReader.readU4()
+                        attr.localVariableTableLength = commonReader.readU2()
+                        //解析LocalVariableInfo
+                        val localVariableInfoArr = ArrayList<LocalVariableInfo>()
+                        for (i in IntRange(0, attr.localVariableTableLength.toInt() - 1)) {
+                            val localVariableInfo = LocalVariableInfo()
+                            localVariableInfo.startPc = commonReader.readU2()
+                            localVariableInfo.length = commonReader.readU2()
+                            localVariableInfo.nameIndex = commonReader.readU2()
+                            localVariableInfo.descriptorIndex = commonReader.readU2()
+                            localVariableInfo.index = commonReader.readU2()
+                            localVariableInfoArr.add(localVariableInfo)
+                        }
+                        attr.localVariableTable = localVariableInfoArr.toTypedArray()
+                        arr.add(attr)
+                    }
+                    "SourceFile" -> {
+                        val attr = SourceFile()
+                        attr.attributeNameIndex = attributeNameIndex
+                        attr.attributeLength = commonReader.readU4()
+                        attr.sourceFileIndex = commonReader.readU2()
+                        arr.add(attr)
+                    }
+                    else -> {
+                        println("Attr $name not support!Will Ignore!")
+                        commonReader.drop(commonReader.readU4().toInt())
+                    }
                 }
             }
+            return arr.toTypedArray()
         }
         return ArrayList<Attribute>().toTypedArray()
     }

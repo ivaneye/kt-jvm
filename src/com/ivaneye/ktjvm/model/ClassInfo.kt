@@ -19,13 +19,13 @@ class ClassInfo {
     lateinit var thisClass: U2
     lateinit var superClass: U2
     lateinit var interfacesCount: U2
-    lateinit var interfaceInfos: Array<U2>   // 常量池中的索引
+    var interfaceInfos: Array<U2> = emptyArray()   // 常量池中的索引
     lateinit var fieldsCount: U2
-    lateinit var fieldInfos: Array<FieldInfo>
+    var fieldInfos: Array<FieldInfo> = emptyArray()
     lateinit var methodsCount: U2
-    lateinit var methodInfos: Array<MethodInfo>
+    var methodInfos: Array<MethodInfo> = emptyArray()
     lateinit var attributesCount: U2
-    lateinit var attributeInfos: Array<Attribute>
+    var attributeInfos: Array<Attribute> = emptyArray()
 
     fun magic(): String {
         return "0x${magic.toHexString()}"
@@ -63,11 +63,31 @@ class ClassInfo {
         return interfacesCount.toInt()
     }
 
+    fun interfaces(): Array<U2> {
+        return interfaceInfos;
+    }
+
     fun fieldsCount(): Int {
         return fieldsCount.toInt()
     }
 
+    fun fields(): Array<FieldInfo> {
+        return fieldInfos
+    }
+
     fun methodsCount(): Int {
         return methodsCount.toInt()
+    }
+
+    fun methods(): Array<MethodInfo> {
+        return methodInfos
+    }
+
+    fun attributesCount(): Int {
+        return attributesCount.toInt()
+    }
+
+    fun attributeInfos(): Array<Attribute> {
+        return attributeInfos
     }
 }

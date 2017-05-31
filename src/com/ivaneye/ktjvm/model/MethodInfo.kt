@@ -6,5 +6,5 @@ import com.ivaneye.ktjvm.type.U2
 /**
  * Created by wangyifan on 2017/5/17.
  */
-class MethodInfo(accFlag: U2, nameIdx: U2, descIdx: U2, attrCount: U2, attrs: Array<Attribute>) {
+class MethodInfo(val accFlag: U2, val nameIdx: U2, val descIdx: U2, val attrCount: U2, val attrs: Array<Attribute>, val classInfo: ClassInfo) {
 }
