@@ -54,6 +54,11 @@ object Main {
         }
         println("Fields End!")
         println(classInfo.methodsCount())
+        println("Methods:")
+        for(method in classInfo.methods()) {
+            println(method)
+        }
+        println("Methods End!")
         println(classInfo.methods())
         println(classInfo.attributesCount())
         println(classInfo.attributeInfos())
