@@ -61,6 +61,10 @@ object Main {
         println("Methods End!")
         println(classInfo.methods())
         println(classInfo.attributesCount())
-        println(classInfo.attributeInfos())
+        println("Attrs:")
+        for(attrInfo in classInfo.attributeInfos()) {
+            println(attrInfo)
+        }
+        println("Attrs End!")
     }
 }
