@@ -7,7 +7,7 @@ class ClassPath {
 
     lateinit var bootClassPathFinder: Finder
     //bootClassPath���Ѽ���
-//    lateinit var extClassPathFinder: Finder
+    lateinit var extClassPathFinder: Finder
     lateinit var userClassPathFinder: Finder
 
     constructor(cpStr: String) {
@@ -20,7 +20,7 @@ class ClassPath {
         val jreLibPath = "$javaHome/jre/lib"
         val jreExtPath = "$javaHome/jre/lib/ext"
         bootClassPathFinder = DirFinder(jreLibPath)
-//        extClassPathFinder = DirFinder(jreExtPath)
+        extClassPathFinder = DirFinder(jreExtPath)
     }
 
     private fun parseUserClasspath(cpStr: String) {
@@ -30,6 +30,9 @@ class ClassPath {
     fun readClass(className: String): ByteArray? {
         try {
             var result = bootClassPathFinder.readClass(className)
+            if (result == null) {
+                result = extClassPathFinder.readClass(className)
+            }
             if (result == null) {
                 result = userClassPathFinder.readClass(className)
             }
